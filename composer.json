@@ -1,0 +1,13 @@
+{
+    "name": "thomasvargiu/jwt-module",
+    "description": "JWT framework module",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Vargiu",
+            "email": "tvargiu@gmail.com"
+        }
+    ],
+    "require": {}
+}
