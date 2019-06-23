@@ -1,0 +1,13 @@
+parameters:
+    level: max
+    fileExtensions:
+        - php
+    excludes_analyse:
+        - %currentWorkingDirectory%/.phpstorm.meta.php
+        - %currentWorkingDirectory%/vendor/*
+
+    ignoreErrors:
+        - '#PHPDoc tag @throws with type Interop\\Container\\Exception\\ContainerException is not subtype of Throwable#'
+
+includes:
+    - vendor/jangregor/phpstan-prophecy/src/extension.neon

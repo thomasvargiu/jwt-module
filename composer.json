@@ -3,11 +3,86 @@
     "description": "JWT framework module",
     "type": "library",
     "license": "MIT",
+    "keywords": ["JWS", "JWT", "JWE", "JWA", "JWK", "JWKSet", "Jot", "Jose", "RFC7515", "RFC7516", "RFC7517", "RFC7518", "RFC7519", "RFC7520", "Module", "Zend", "Expressive", "web-token"],
     "authors": [
         {
             "name": "Thomas Vargiu",
-            "email": "tvargiu@gmail.com"
+            "email": "tvargiu@gmail.com",
+            "homepage": "https://github.com/thomasvargiu"
         }
     ],
-    "require": {}
+    "extra": {
+        "zf": {
+            "component": "TMV\\JWTModule",
+            "config-provider": "TMV\\JWTModule\\ConfigProvider"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "TMV\\JWTModule\\":  "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TMV\\JWTModuleTest\\":  "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.2",
+        "web-token/jwt-core": "^2.0",
+        "zendframework/zend-servicemanager": "^3.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "guzzlehttp/psr7": "^1.4",
+        "jangregor/phpstan-prophecy": "^0.4.1",
+        "php-http/httplug": "^2.0",
+        "php-http/mock-client": "^1.3",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.11.8",
+        "phpstan/phpstan-phpunit": "^0.11.2",
+        "phpunit/phpunit": "^8.2",
+        "psr/http-client": "^1.0",
+        "psr/http-message": "^1.0.1",
+        "psr/http-server-middleware": "^1.0.1",
+        "web-token/jwt-checker": "^2.0",
+        "web-token/jwt-encryption": "^2.0",
+        "web-token/jwt-encryption-algorithm-aescbc": "^2.0",
+        "web-token/jwt-encryption-algorithm-aesgcm": "^2.0",
+        "web-token/jwt-encryption-algorithm-aesgcmkw": "^2.0",
+        "web-token/jwt-encryption-algorithm-aeskw": "^2.0",
+        "web-token/jwt-encryption-algorithm-dir": "^2.0",
+        "web-token/jwt-encryption-algorithm-ecdh-es": "^2.0",
+        "web-token/jwt-encryption-algorithm-experimental": "^2.0",
+        "web-token/jwt-encryption-algorithm-pbes2": "^2.0",
+        "web-token/jwt-encryption-algorithm-rsa": "^2.0",
+        "web-token/jwt-key-mgmt": "^2.0",
+        "web-token/jwt-nested-token": "^2.0",
+        "web-token/jwt-signature": "^2.0",
+        "web-token/jwt-signature-algorithm-ecdsa": "^2.0",
+        "web-token/jwt-signature-algorithm-eddsa": "^2.0",
+        "web-token/jwt-signature-algorithm-experimental": "^2.0",
+        "web-token/jwt-signature-algorithm-hmac": "^2.0",
+        "web-token/jwt-signature-algorithm-none": "^2.0",
+        "web-token/jwt-signature-algorithm-rsa": "^2.0",
+        "zendframework/zend-diactoros": "^2.1"
+    },
+    "suggest": {
+        "web-token/jwt-checker": "Add header and claim checker managers as Symfony services.",
+        "web-token/jwt-encryption": "Add Encrypted tokens (JWE) support and useful Symfony services.",
+        "web-token/jwt-key-mgmt": "Add Keys (JWK) and Key sets (JWKSet) management tools.",
+        "web-token/jwt-signature": "Add signed tokens (JWS) support and useful Symfony services."
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "cs-check": "php-cs-fixer fix --dry-run --diff --allow-risky=yes",
+        "cs-fix": "php-cs-fixer fix --diff --allow-risky=yes",
+        "phpstan": "phpstan analyse --no-progress .",
+        "check": [
+            "@cs-check",
+            "@phpstan"
+        ]
+    }
 }
