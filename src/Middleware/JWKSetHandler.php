@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TMV\JWTModule\Middleware;
 
+use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWKSet;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -46,7 +47,13 @@ class JWKSetHandler implements RequestHandlerInterface
             $response = $response->withHeader('Cache-Control', 'max-age=' . $this->maxAge);
         }
 
-        $jwks = \json_encode($this->jwkset->jsonSerialize());
+        $keys = \array_map(static function (JWK $jwk) {
+            return $jwk->toPublic();
+        }, $this->jwkset->all());
+
+        $jwks = new JWKSet($keys);
+
+        $jwks = \json_encode($jwks->jsonSerialize());
 
         if (false === $jwks) {
             throw new RuntimeException('Unable to create jwk set json content');
