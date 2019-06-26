@@ -27,16 +27,23 @@ class JWKSetHandler implements RequestHandlerInterface
     /** @var int */
     private $maxAge;
 
+    /** @var callable */
+    private $jwkSetFactory;
+
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         StreamFactoryInterface $streamFactory,
         JWKSet $jwkset,
-        int $maxAge = 0
+        int $maxAge = 0,
+        callable $jwkSetFactory = null
     ) {
         $this->responseFactory = $responseFactory;
         $this->streamFactory = $streamFactory;
         $this->jwkset = $jwkset;
         $this->maxAge = $maxAge;
+        $this->jwkSetFactory = $jwkSetFactory ?: static function (array $keys) {
+            return new JWKSet($keys);
+        };
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -51,7 +58,11 @@ class JWKSetHandler implements RequestHandlerInterface
             return $jwk->toPublic();
         }, $this->jwkset->all());
 
-        $jwks = new JWKSet($keys);
+        $jwks = ($this->jwkSetFactory)($keys);
+
+        if (! $jwks instanceof JWKSet) {
+            throw new RuntimeException('Invalid JWKSet created');
+        }
 
         $jwks = \json_encode($jwks->jsonSerialize());
 
